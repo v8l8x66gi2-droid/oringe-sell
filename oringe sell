@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!--
+[PALETTE]: Brilliant Blues & Vibrant Orange (#2563EB, #F59E0B, #10B981, #F3F4F6, #FFFFFF)
+[WEB_OPTIMIZATION]: Added loading states, responsive nav fixes, and meta tags for link sharing.
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="智慧农业果品可信交易平台 - 基于 AI 与区块链风控的万亿级农产品流转解决方案">
+    <meta property="og:title" content="智慧农业果品交易平台">
+    <meta property="og:description" content="数字化赋能农产品供应链，Gemini AI 驱动决策。">
+    <title>智慧农业果品交易平台 | 数字化展示</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        html { scroll-behavior: smooth; }
+        
+        /* 页面加载动画 */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+        }
+        
+        /* 手风琴平滑过渡 */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-content.active {
+            max-height: 600px;
+        }
+
+        .step-card { 
+            transition: all 0.3s ease; 
+            border: 1px solid rgba(229, 231, 235, 1);
+        }
+        .step-card:hover { 
+            border-color: #2563eb;
+            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.15);
+        }
+
+        .ai-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 antialiased">
+
+    <!-- 加载层 -->
+    <div id="loader">
+        <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="text-blue-600 font-bold tracking-widest">AgriTrust AI 正在准备...</p>
+    </div>
+
+    <!-- 进度条 -->
+    <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-amber-500 z-[60] transition-all duration-150" style="width: 0%"></div>
+
+    <!-- 导航栏 -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl text-blue-600 flex items-center gap-2">
+                <span class="text-2xl">🌱</span> <span class="hidden sm:inline">AgriTrust AI</span>
+            </div>
+            <div class="flex space-x-4 md:space-x-8 text-sm font-bold text-gray-500">
+                <a href="#market" class="hover:text-blue-600 transition-colors">市场</a>
+                <a href="#ai-features" class="hover:text-blue-600 transition-colors">AI引擎</a>
+                <a href="#flow" class="hover:text-blue-600 transition-colors">流转路径</a>
+                <a href="#" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition">体验Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-24 px-4 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 flex justify-end items-center pointer-events-none text-[30rem] select-none">🍎</div>
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 bg-blue-500/30 backdrop-blur-md px-4 py-1 rounded-full text-sm font-semibold mb-6 border border-blue-400">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                </span>
+                2024 年度智慧农业标杆项目
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight leading-tight">
+                智慧农业果品<br><span class="text-amber-400">可信交易平台</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-blue-100 font-light max-w-2xl mb-10 leading-relaxed">
+                集成 Gemini AI 决策引擎，重塑农产品供应链。以数字风控打破信任壁垒，赋能万亿级生鲜零售市场。
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#flow" class="bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1">立即开始</a>
+                <a href="#ai-features" class="bg-blue-700/50 backdrop-blur-sm text-white px-8 py-4 rounded-2xl font-bold border border-white/20 hover:bg-blue-800 transition">了解 AI 技术</a>
+            </div>
+            
+            <!-- 新增：核心业务数据展示墙 -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-3 gap-6 border-t border-blue-500/40 pt-10 max-w-3xl">
+                <div>
+                    <div class="text-3xl md:text-4xl font-black text-amber-400 mb-2">10W+</div>
+                    <div class="text-blue-200 text-sm font-medium">源头认证果农入驻</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-black text-amber-400 mb-2">¥5.2亿</div>
+                    <div class="text-blue-200 text-sm font-medium">平台累计担保交易额</div>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <div class="text-3xl md:text-4xl font-black text-emerald-400 mb-2">⬇ 15%</div>
+                    <div class="text-blue-200 text-sm font-medium">生鲜平均损耗率压降</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-20 space-y-32">
+
+        <!-- 市场分析 -->
+        <section id="market" class="scroll-mt-28">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-5">
+                    <span class="text-blue-600 font-bold tracking-widest uppercase text-sm">Market Insight</span>
+                    <h2 class="text-4xl font-extrabold text-gray-900 mt-4 mb-6">万亿赛道<br>数字化转型的红利</h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">中国水果零售市场规模稳步上升。我们聚焦产地直发流通环节，通过 AI 算法优化物流路径，释放被冗长供应链吞噬的利润。</p>
+                    
+                    <!-- 新增：痛点与解决方案对比列表 -->
+                    <ul class="space-y-5 mb-10">
+                        <li class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-1">痛</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800">多级流转，层层加码</h4>
+                                <p class="text-gray-500 text-sm mt-1 leading-relaxed">传统模式需经代办、一二级批发等5个以上的流通环节，导致终端加价率高达 80%-120%。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-1">解</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800">端到端直连，透明降本</h4>
+                                <p class="text-gray-500 text-sm mt-1 leading-relaxed">通过平台实现“果园直连商户”，缩短流转周期，全面降低货损，让利于农、让利于商。</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="text-3xl font-black text-blue-600">7.6%</div>
+                            <div class="text-xs text-gray-400 font-bold uppercase mt-1">CAGR 年复合增长</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <div class="text-3xl font-black text-blue-600">1.8T</div>
+                            <div class="text-xs text-gray-400 font-bold uppercase mt-1">2026年 市场规模预测</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- 优化：将图表区拆分为上下两部分，增加效率对比图 -->
+                    <div class="bg-white rounded-[2rem] shadow-xl shadow-gray-200/50 p-8 border border-gray-100">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-bold text-gray-800">市场增长预测线 (RMB/万亿)</h3>
+                            <button onclick="predictMarket()" class="ai-pulse bg-blue-600 text-white text-xs px-4 py-2 rounded-full font-bold hover:bg-blue-700 transition">Gemini 智能推演</button>
+                        </div>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="marketChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-[2rem] shadow-xl shadow-gray-200/50 p-8 border border-gray-100">
+                        <h3 class="font-bold text-gray-800 mb-4">供应链效率关键指标对比</h3>
+                        <p class="text-xs text-gray-500 mb-6">直采模式大幅削减流转加价与生鲜货损率</p>
+                        <div class="chart-container" style="height: 200px;">
+                            <canvas id="efficiencyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI 引擎展示 -->
+        <section id="ai-features" class="scroll-mt-28 bg-gray-900 rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px]"></div>
+            <div class="relative z-10 text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-4xl font-black mb-6">✨ Gemini AI 智能决策中心</h2>
+                <p class="text-gray-400 text-lg">基于 Google 领先的生成式 AI 技术，我们将复杂的农业交易决策自动化、智能化。</p>
+            </div>
+            
+            <!-- 优化：改为三列布局，增加智能分级模块 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] hover:bg-white/10 transition group">
+                    <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">⚖️</div>
+                    <h3 class="text-2xl font-bold mb-4">合同风险扫描</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">利用 LLM 深度分析非标交易条款，自动识别“损耗分担、质量对标、账期约定”中的法律盲区。</p>
+                    <button onclick="simulateAI('audit')" class="text-blue-400 font-bold flex items-center gap-2 hover:gap-4 transition-all">执行风险扫描 ➔</button>
+                </div>
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] hover:bg-white/10 transition group">
+                    <div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🚀</div>
+                    <h3 class="text-2xl font-bold mb-4">全渠道营销生成</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">针对不同终端，结合产地特性，一键生成带货文案与短视频脚本，经测试转化率提升 4.5 倍。</p>
+                    <button onclick="simulateAI('marketing')" class="text-amber-400 font-bold flex items-center gap-2 hover:gap-4 transition-all">生成创意内容 ➔</button>
+                </div>
+                <!-- 新增第三个 AI 功能卡片 -->
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] hover:bg-white/10 transition group lg:col-span-1 md:col-span-2">
+                    <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">📊</div>
+                    <h3 class="text-2xl font-bold mb-4">智能定级与定价</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">基于计算机视觉分析果径/色泽，结合全国批发市场实时行情大数据，为果农提供极具竞争力的动态指导价。</p>
+                    <button onclick="simulateAI('pricing')" class="text-emerald-400 font-bold flex items-center gap-2 hover:gap-4 transition-all">AI 定价推演 ➔</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心流转路径 - 手风琴交互 -->
+        <section id="flow" class="scroll-mt-28">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-black text-gray-900 mb-4">核心流转路径</h2>
+                    <div class="h-1.5 w-24 bg-blue-600 mx-auto rounded-full"></div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Step 1 -->
+                    <div class="step-card bg-white rounded-3xl overflow-hidden" onclick="toggleStep(1)">
+                        <div class="p-8 flex items-center justify-between cursor-pointer">
+                            <div class="flex items-center gap-8">
+                                <span class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-black shadow-lg">01</span>
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 uppercase tracking-tight">农户端：智能实景挂单</h4>
+                                    <p class="text-gray-400 text-sm mt-1">AI 视觉识别 + 区块链溯源存证</p>
+                                </div>
+                            </div>
+                            <div id="icon-1" class="text-blue-600 font-bold transition-transform">＋</div>
+                        </div>
+                        <div id="content-1" class="accordion-content">
+                            <div class="px-8 pb-10 flex flex-col md:flex-row gap-8 items-start border-t border-gray-50 pt-8">
+                                <div class="flex-1 space-y-4">
+                                    <p class="text-gray-600">农户拍摄果园实时视频，AI 自动分析果径、成熟度及预期产量。系统自动抓取气象站历史数据，生成可信的“品质报告”。</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-bold">LBS 定位</span>
+                                        <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-bold">AI 视觉定级</span>
+                                        <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-bold">上链存证</span>
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-64 aspect-video bg-gray-100 rounded-2xl border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-400 text-xs text-center p-4">
+                                    [APP 实拍演示动画加载中]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card bg-white rounded-3xl overflow-hidden" onclick="toggleStep(2)">
+                        <div class="p-8 flex items-center justify-between cursor-pointer">
+                            <div class="flex items-center gap-8">
+                                <span class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center font-black shadow-lg">02</span>
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 uppercase tracking-tight">商户端：画像匹配寻货</h4>
+                                    <p class="text-gray-400 text-sm mt-1">Gemini 驱动的供应链匹配算法</p>
+                                </div>
+                            </div>
+                            <div id="icon-2" class="text-amber-500 font-bold transition-transform">＋</div>
+                        </div>
+                        <div id="content-2" class="accordion-content">
+                            <div class="px-8 pb-10 flex flex-col md:flex-row gap-8 items-start border-t border-gray-50 pt-8">
+                                <div class="flex-1 space-y-4">
+                                    <p class="text-gray-600">根据零售商的历史销售数据与当前区域消费偏好，AI 会自动推送最合适的产地货源。支持实时视频对货，打破产销信息差。</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-amber-50 text-amber-600 text-xs rounded-full font-bold">精准匹配</span>
+                                        <span class="px-3 py-1 bg-amber-50 text-amber-600 text-xs rounded-full font-bold">视频验货</span>
+                                        <span class="px-3 py-1 bg-amber-50 text-amber-600 text-xs rounded-full font-bold">一键议价</span>
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-64 aspect-video bg-gray-100 rounded-2xl border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-400 text-xs text-center p-4">
+                                    [智能匹配逻辑演示]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-card bg-white rounded-3xl overflow-hidden" onclick="toggleStep(3)">
+                        <div class="p-8 flex items-center justify-between cursor-pointer">
+                            <div class="flex items-center gap-8">
+                                <span class="w-12 h-12 bg-emerald-600 text-white rounded-2xl flex items-center justify-center font-black shadow-lg">03</span>
+                                <div>
+                                    <h4 class="text-xl font-bold text-gray-800 uppercase tracking-tight">平台端：托管结算清算</h4>
+                                    <p class="text-gray-400 text-sm mt-1">数字化信用评估与资金托管</p>
+                                </div>
+                            </div>
+                            <div id="icon-3" class="text-emerald-600 font-bold transition-transform">＋</div>
+                        </div>
+                        <div id="content-3" class="accordion-content">
+                            <div class="px-8 pb-10 flex flex-col md:flex-row gap-8 items-start border-t border-gray-50 pt-8">
+                                <div class="flex-1 space-y-4">
+                                    <p class="text-gray-600">平台执行双向资金托管。物流状态与货品验收报告自动关联支付条件，货到验收合格后，通过智能合约实现实时清算，拒绝拖欠账期。</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs rounded-full font-bold">资金安全</span>
+                                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs rounded-full font-bold">智能清分</span>
+                                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs rounded-full font-bold">信用积累</span>
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-64 aspect-video bg-gray-100 rounded-2xl border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-400 text-xs text-center p-4">
+                                    [清算系统后台预览]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 新增：可信保障横幅 -->
+                <div class="mt-12 bg-blue-50/50 rounded-[2rem] p-8 md:p-10 border border-blue-100 flex flex-col md:flex-row items-center gap-8 shadow-sm">
+                    <div class="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-[1.5rem] flex items-center justify-center text-4xl shadow-xl transform rotate-3">
+                        🛡️
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-black text-blue-900 mb-3">可信底座：全面保障大宗交易安全</h4>
+                        <p class="text-blue-800/80 leading-relaxed text-sm">
+                            全流程接入 <strong>公安部 API 实人认证</strong> 确保交易主体真实，结合 <strong>双向定金平台托管</strong> 机制防范恶意毁约跑单，并由具备 <strong>CA 认证机构签发的电子合同</strong> 提供最高效的法律证据链存证。让每一笔订单都在阳光下运行。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI 模拟弹窗 -->
+    <div id="modal" class="fixed inset-0 bg-gray-900/80 backdrop-blur-md z-[100] flex items-center justify-center hidden p-6">
+        <div class="bg-white w-full max-w-xl rounded-[2.5rem] p-10 shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-8 right-8 text-gray-400 hover:text-gray-900 text-2xl">&times;</button>
+            <div id="modal-loading" class="flex flex-col items-center py-10">
+                <div class="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p class="text-blue-600 font-bold">Gemini 分析中...</p>
+            </div>
+            <div id="modal-body" class="hidden">
+                <h4 id="modal-title" class="text-2xl font-black mb-6">AI 分析报告</h4>
+                <div id="modal-text" class="text-gray-600 leading-relaxed text-lg bg-blue-50 p-8 rounded-3xl border border-blue-100"></div>
+                <button onclick="closeModal()" class="w-full mt-8 bg-blue-600 text-white py-4 rounded-2xl font-black hover:bg-blue-700 transition">完成</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-950 text-white py-20 px-4">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-10">
+            <div>
+                <div class="text-2xl font-bold text-blue-500 mb-4 tracking-tighter flex items-center gap-2">
+                    <span>🌱</span> AgriTrust AI
+                </div>
+                <p class="text-gray-500 max-w-xs">基于科技创新，让每一颗水果的流转都有迹可循，让每一份信任都值得托付。</p>
+            </div>
+            <div class="text-right text-gray-600 text-sm">
+                <p>© 2024 AgriTrust. All Rights Reserved.</p>
+                <p class="mt-2">联系我们: contact@agritrust.ai</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const apiKey = ""; // 运行时自动注入
+
+        // 初始化
+        window.onload = () => {
+            initChart();
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 800);
+            // 默认开启第一个手风琴
+            toggleStep(1);
+        };
+
+        // 进度条
+        window.onscroll = () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // 图表
+        let chart;
+        function initChart() {
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024', '2025E', '2026E'],
+                    datasets: [{
+                        data: [1.1, 1.15, 1.22, 1.3, 1.4, 1.58, 1.8],
+                        borderColor: '#2563eb',
+                        borderWidth: 5,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#2563eb',
+                        pointBorderWidth: 3,
+                        pointRadius: 6,
+                        tension: 0.4,
+                        fill: true,
+                        backgroundColor: (context) => {
+                            const chart = context.chart;
+                            const {ctx, chartArea} = chart;
+                            if (!chartArea) return null;
+                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                            gradient.addColorStop(0, 'rgba(37, 99, 235, 0)');
+                            gradient.addColorStop(1, 'rgba(37, 99, 235, 0.1)');
+                            return gradient;
+                        }
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { border: { dash: [5, 5] }, grid: { color: '#f3f4f6' } }
+                    }
+                }
+            });
+
+            // 新增：供应链效率对比柱状图
+            const ctxEff = document.getElementById('efficiencyChart').getContext('2d');
+            new Chart(ctxEff, {
+                type: 'bar',
+                data: {
+                    labels: ['平均流转加价率 (%)', '生鲜流通损耗率 (%)'],
+                    datasets: [
+                        { label: '传统大宗供应链', data: [85, 35], backgroundColor: '#f59e0b', borderRadius: 6, barPercentage: 0.6 },
+                        { label: 'AgriTrust 直采体系', data: [20, 12], backgroundColor: '#10b981', borderRadius: 6, barPercentage: 0.6 }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } } },
+                    scales: { 
+                        y: { beginAtZero: true, grid: { color: '#f3f4f6' } }, 
+                        x: { grid: { display: false } } 
+                    }
+                }
+            });
+        }
+
+        // 手风琴
+        function toggleStep(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            const isActive = content.classList.contains('active');
+            
+            // 关闭所有
+            document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('[id^="icon-"]').forEach(i => i.style.transform = 'rotate(0deg)');
+            document.querySelectorAll('[id^="icon-"]').forEach(i => i.innerText = '＋');
+
+            if (!isActive) {
+                content.classList.add('active');
+                icon.innerText = '－';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Gemini 调用
+        async function callGemini(prompt, system) {
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: system }] }
+            };
+            try {
+                const res = await fetch(endpoint, { method: 'POST', body: JSON.stringify(payload) });
+                const data = await res.json();
+                return data.candidates?.[0]?.content?.parts?.[0]?.text;
+            } catch (e) { return "无法获取分析数据，请检查网络环境。"; }
+        }
+
+        async function predictMarket() {
+            const result = await callGemini("简短预测水果市场数字化带来的利润提升空间。", "你是一个顶级商业顾问。");
+            alert("AI 推演结果：" + result);
+            chart.data.datasets[0].data[6] = 2.1;
+            chart.update();
+        }
+
+        async function simulateAI(type) {
+            const modal = document.getElementById('modal');
+            const loader = document.getElementById('modal-loading');
+            const body = document.getElementById('modal-body');
+            const title = document.getElementById('modal-title');
+            const text = document.getElementById('modal-text');
+
+            modal.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            body.classList.add('hidden');
+
+            // 扩展 AI 请求逻辑以支持定价功能
+            const query = type === 'audit' ? "扫描苹果供应链合同中的三个潜在法律漏洞。" : 
+                          type === 'marketing' ? "为产地直采红富士苹果写一段能够引起城市白领共鸣的朋友圈卖货文案。" :
+                          "基于当前季节和市场趋势，给出一份优质红富士苹果的智能定价建议和视觉分级标准。";
+            
+            const result = await callGemini(query, "你是一个农业科技专家。");
+
+            // 扩展标题逻辑
+            title.innerText = type === 'audit' ? "🔍 智能审计结果" : 
+                              type === 'marketing' ? "✨ AI 营销助手" : 
+                              "📊 智能定价与分级报告";
+            
+            text.innerText = result;
+            loader.classList.add('hidden');
+            body.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
